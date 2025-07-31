@@ -1,0 +1,48 @@
+.api-key-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.api-key-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.api-key-toggle:active {
+  transform: translateY(0);
+}
+
+.api-key-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .api-key-toggle {
+    top: 15px;
+    right: 15px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .api-key-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+}

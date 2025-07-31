@@ -4,6 +4,7 @@
   background: linear-gradient(to bottom, #5c1a1a 0%, #1f0a0a 100%);
   background-attachment: fixed;
   overflow: hidden;
+  position: relative;
 }
 
 .home-container {
@@ -32,55 +33,6 @@
   letter-spacing: -1px;
 }
 
-.search-container {
-  width: 100%;
-  max-width: 600px;
-  position: relative;
-}
-
-.search-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 20px;
-  width: 20px;
-  height: 20px;
-  color: #aaa;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.search-bar {
-  width: 100%;
-  padding: 16px 20px 16px 55px;
-  font-size: 1.1rem;
-  border: 2px solid #303030;
-  border-radius: 30px;
-  background-color: #121212;
-  color: white;
-  outline: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.search-bar::placeholder {
-  color: #aaa;
-}
-
-.search-bar:focus {
-  border-color: #e94560;
-  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.2), 0 6px 16px rgba(0, 0, 0, 0.4);
-  background-color: #1e1e1e;
-}
-
-.search-bar:hover {
-  border-color: #404040;
-  background-color: #1a1a1a;
-}
 
 @media (max-width: 768px) {
   .content-center {
@@ -90,10 +42,5 @@
   .app-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-  }
-  
-  .search-bar {
-    font-size: 1rem;
-    padding: 14px 18px 14px 50px;
   }
 }
