@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './VideoGallery.css';
 import { fetchChannelVideos } from '../utils/channelApi';
+import SortControls from './SortControls';
 
 const VideoGallery = ({ channelId }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortBy, setSortBy] = useState('newest');
 
   useEffect(() => {
     const loadVideos = async () => {
@@ -52,6 +54,23 @@ const VideoGallery = ({ channelId }) => {
     return `${Math.ceil(diffDays / 365)} years ago`;
   };
 
+  const sortVideos = (videosToSort, sortType) => {
+    const sortedVideos = [...videosToSort];
+    
+    switch (sortType) {
+      case 'newest':
+        return sortedVideos.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      case 'oldest':
+        return sortedVideos.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+      case 'mostViews':
+        return sortedVideos.sort((a, b) => parseInt(b.viewCount || 0) - parseInt(a.viewCount || 0));
+      default:
+        return sortedVideos;
+    }
+  };
+
+  const sortedVideos = sortVideos(videos, sortBy);
+
   if (loading) {
     return (
       <div className="video-gallery">
@@ -83,9 +102,12 @@ const VideoGallery = ({ channelId }) => {
 
   return (
     <div className="video-gallery">
-      <h2>Videos</h2>
+      <div className="video-gallery-header">
+        <h2>Videos</h2>
+        <SortControls sortBy={sortBy} onSortChange={setSortBy} />
+      </div>
       <div className="video-grid">
-        {videos.map((video) => (
+        {sortedVideos.map((video) => (
           <div key={video.id} className="video-card">
             <div className="video-thumbnail">
               <img
