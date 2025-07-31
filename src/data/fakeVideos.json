@@ -32,6 +32,83 @@
       "commentCount": "35000",
       "duration": "PT45S",
       "isShort": true
+    },
+    {
+      "id": "fake-video-3",
+      "title": "I Gave Away $1,000,000 In 24 Hours",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-3/mqdefault.jpg",
+      "publishedAt": "2024-01-05T11:15:00Z",
+      "viewCount": "38000000",
+      "likeCount": "1900000",
+      "commentCount": "67000",
+      "duration": "PT18M12S",
+      "isShort": false
+    },
+    {
+      "id": "fake-short-2",
+      "title": "World's Most Expensive Burger",
+      "thumbnail": "https://i.ytimg.com/vi/fake-short-2/mqdefault.jpg",
+      "publishedAt": "2024-01-08T20:30:00Z",
+      "viewCount": "22000000",
+      "likeCount": "1100000",
+      "commentCount": "28000",
+      "duration": "PT38S",
+      "isShort": true
+    },
+    {
+      "id": "fake-video-4",
+      "title": "Surviving 50 Hours In Antarctica",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-4/mqdefault.jpg",
+      "publishedAt": "2024-01-03T13:45:00Z",
+      "viewCount": "41000000",
+      "likeCount": "2200000",
+      "commentCount": "89000",
+      "duration": "PT22M35S",
+      "isShort": false
+    },
+    {
+      "id": "fake-video-5",
+      "title": "Last To Leave Circle Wins $500,000",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-5/mqdefault.jpg",
+      "publishedAt": "2023-12-28T15:00:00Z",
+      "viewCount": "35000000",
+      "likeCount": "1750000",
+      "commentCount": "72000",
+      "duration": "PT16M20S",
+      "isShort": false
+    },
+    {
+      "id": "fake-short-3",
+      "title": "I Ate The World's Spiciest Pepper",
+      "thumbnail": "https://i.ytimg.com/vi/fake-short-3/mqdefault.jpg",
+      "publishedAt": "2024-01-01T18:00:00Z",
+      "viewCount": "18000000",
+      "likeCount": "920000",
+      "commentCount": "31000",
+      "duration": "PT52S",
+      "isShort": true
+    },
+    {
+      "id": "fake-video-6",
+      "title": "I Bought Everything In A Store",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-6/mqdefault.jpg",
+      "publishedAt": "2023-12-25T12:00:00Z",
+      "viewCount": "29000000",
+      "likeCount": "1400000",
+      "commentCount": "58000",
+      "duration": "PT14M55S",
+      "isShort": false
+    },
+    {
+      "id": "fake-video-7",
+      "title": "World's Largest Pizza vs Smallest Pizza",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-7/mqdefault.jpg",
+      "publishedAt": "2023-12-20T16:30:00Z",
+      "viewCount": "33000000",
+      "likeCount": "1650000",
+      "commentCount": "64000",
+      "duration": "PT19M40S",
+      "isShort": false
     }
   ],
   "UC-lHJZR3Gqxm24_Vd_AJ5Yw": [
@@ -56,6 +133,94 @@
       "commentCount": "78000",
       "duration": "PT25M10S",
       "isShort": false
+    },
+    {
+      "id": "fake-pewdie-3",
+      "title": "Playing Minecraft After 5 Years",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-3/mqdefault.jpg",
+      "publishedAt": "2024-01-11T14:20:00Z",
+      "viewCount": "15000000",
+      "likeCount": "1200000",
+      "commentCount": "95000",
+      "duration": "PT32M15S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-short-1",
+      "title": "When YouTube Changed Everything",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-short-1/mqdefault.jpg",
+      "publishedAt": "2024-01-09T16:45:00Z",
+      "viewCount": "6000000",
+      "likeCount": "480000",
+      "commentCount": "22000",
+      "duration": "PT55S",
+      "isShort": true
+    },
+    {
+      "id": "fake-pewdie-4",
+      "title": "Rating Your Memes #147",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-4/mqdefault.jpg",
+      "publishedAt": "2024-01-06T11:30:00Z",
+      "viewCount": "9200000",
+      "likeCount": "740000",
+      "commentCount": "52000",
+      "duration": "PT21M08S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-5",
+      "title": "I Tried VR Chat For The First Time",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-5/mqdefault.jpg",
+      "publishedAt": "2024-01-02T13:15:00Z",
+      "viewCount": "11000000",
+      "likeCount": "850000",
+      "commentCount": "67000",
+      "duration": "PT28M45S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-short-2",
+      "title": "Epic Gaming Fail Compilation",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-short-2/mqdefault.jpg",
+      "publishedAt": "2024-01-04T19:00:00Z",
+      "viewCount": "7500000",
+      "likeCount": "520000",
+      "commentCount": "18000",
+      "duration": "PT42S",
+      "isShort": true
+    },
+    {
+      "id": "fake-pewdie-6",
+      "title": "Reacting to My Old Videos (Cringe Alert)",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-6/mqdefault.jpg",
+      "publishedAt": "2023-12-30T10:00:00Z",
+      "viewCount": "13500000",
+      "likeCount": "1050000",
+      "commentCount": "88000",
+      "duration": "PT35M20S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-7",
+      "title": "Building the Ultimate Gaming Room",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-7/mqdefault.jpg",
+      "publishedAt": "2023-12-27T15:45:00Z",
+      "viewCount": "10800000",
+      "likeCount": "820000",
+      "commentCount": "71000",
+      "duration": "PT26M33S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-short-3",
+      "title": "My Dog Destroys Everything",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-short-3/mqdefault.jpg",
+      "publishedAt": "2023-12-29T17:30:00Z",
+      "viewCount": "5200000",
+      "likeCount": "410000",
+      "commentCount": "15000",
+      "duration": "PT48S",
+      "isShort": true
     }
   ],
   "UCRijo3ddMTht_IHyNSNXpNQ": [
@@ -69,6 +234,105 @@
       "commentCount": "95000",
       "duration": "PT10M55S",
       "isShort": false
+    },
+    {
+      "id": "fake-dp-2",
+      "title": "Giant Jenga Battle Royale",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-2/mqdefault.jpg",
+      "publishedAt": "2024-01-09T12:30:00Z",
+      "viewCount": "18000000",
+      "likeCount": "890000",
+      "commentCount": "72000",
+      "duration": "PT12M20S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-3",
+      "title": "World Record Paper Airplane Throw",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-3/mqdefault.jpg",
+      "publishedAt": "2024-01-05T14:15:00Z",
+      "viewCount": "22000000",
+      "likeCount": "1050000",
+      "commentCount": "83000",
+      "duration": "PT8M45S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-short-1",
+      "title": "Perfect Bottle Flip Every Time",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-short-1/mqdefault.jpg",
+      "publishedAt": "2024-01-11T18:00:00Z",
+      "viewCount": "12000000",
+      "likeCount": "780000",
+      "commentCount": "31000",
+      "duration": "PT35S",
+      "isShort": true
+    },
+    {
+      "id": "fake-dp-4",
+      "title": "Epic Ping Pong Trick Shots",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-4/mqdefault.jpg",
+      "publishedAt": "2024-01-01T16:00:00Z",
+      "viewCount": "19500000",
+      "likeCount": "920000",
+      "commentCount": "67000",
+      "duration": "PT11M30S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-5",
+      "title": "Overtime Challenge Series | Season 3",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-5/mqdefault.jpg",
+      "publishedAt": "2023-12-28T13:45:00Z",
+      "viewCount": "16000000",
+      "likeCount": "850000",
+      "commentCount": "58000",
+      "duration": "PT15M12S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-short-2",
+      "title": "Bowling Strike With Eyes Closed",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-short-2/mqdefault.jpg",
+      "publishedAt": "2024-01-07T20:15:00Z",
+      "viewCount": "9500000",
+      "likeCount": "620000",
+      "commentCount": "24000",
+      "duration": "PT41S",
+      "isShort": true
+    },
+    {
+      "id": "fake-dp-6",
+      "title": "Ultimate Frisbee Trick Shot Battle",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-6/mqdefault.jpg",
+      "publishedAt": "2023-12-25T11:00:00Z",
+      "viewCount": "21000000",
+      "likeCount": "980000",
+      "commentCount": "74000",
+      "duration": "PT13M55S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-7",
+      "title": "Real Life Angry Birds Challenge",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-7/mqdefault.jpg",
+      "publishedAt": "2023-12-22T09:30:00Z",
+      "viewCount": "17500000",
+      "likeCount": "860000",
+      "commentCount": "61000",
+      "duration": "PT9M40S",
+      "isShort": false
+    },
+    {
+      "id": "fake-dp-short-3",
+      "title": "Impossible Golf Shot Made Easy",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-short-3/mqdefault.jpg",
+      "publishedAt": "2023-12-30T14:20:00Z",
+      "viewCount": "8200000",
+      "likeCount": "530000",
+      "commentCount": "19000",
+      "duration": "PT37S",
+      "isShort": true
     }
   ]
 }
