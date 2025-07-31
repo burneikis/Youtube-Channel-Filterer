@@ -8,9 +8,9 @@ const VideoGallery = ({ channelId }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('mostViews');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState({});
+  const [activeFilters, setActiveFilters] = useState({ showShorts: false });
 
   useEffect(() => {
     const loadVideos = async () => {
@@ -80,9 +80,20 @@ const VideoGallery = ({ channelId }) => {
     let filteredVideos = [...videosToFilter];
 
     if (activeFilters.searchTerm) {
-      filteredVideos = filteredVideos.filter(video =>
-        video.title.toLowerCase().includes(activeFilters.searchTerm.toLowerCase())
-      );
+      const keywordList = activeFilters.searchTerm
+        .toLowerCase()
+        .split(',')
+        .map(k => k.trim())
+        .filter(k => k);
+      
+      filteredVideos = filteredVideos.filter(video => {
+        const title = video.title.toLowerCase();
+        const description = (video.description || '').toLowerCase();
+        
+        return keywordList.some(keyword => 
+          title.includes(keyword) || description.includes(keyword)
+        );
+      });
     }
 
     if (activeFilters.showShorts === false) {

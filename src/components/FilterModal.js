@@ -4,7 +4,7 @@ import './FilterModal.css';
 const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
   const [filters, setFilters] = useState({
     searchTerm: '',
-    showShorts: true
+    showShorts: false
   });
 
   const handleInputChange = (field, value) => {
@@ -22,7 +22,7 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
   const handleReset = () => {
     setFilters({
       searchTerm: '',
-      showShorts: true
+      showShorts: false
     });
   };
 
@@ -43,15 +43,16 @@ const FilterModal = ({ isOpen, onClose, onApplyFilters }) => {
 
         <div className="filter-modal-content">
           <div className="filter-group">
-            <label htmlFor="search-term">Search in titles:</label>
+            <label htmlFor="search-term">Search in titles and descriptions:</label>
             <input
               id="search-term"
               type="text"
               value={filters.searchTerm}
               onChange={(e) => handleInputChange('searchTerm', e.target.value)}
-              placeholder="Enter keywords..."
+              placeholder="Enter keywords (comma-separated)..."
               className="filter-input"
             />
+            <small>Use commas to separate multiple keywords. Videos matching any keyword will be shown.</small>
           </div>
 
           <div className="filter-group">

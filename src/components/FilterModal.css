@@ -87,6 +87,13 @@
   color: var(--text-primary);
 }
 
+.filter-group small {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
 .filter-input,
 .filter-select {
   padding: 10px 12px;

@@ -145,6 +145,7 @@ export const fetchChannelVideos = async (channelId) => {
     return {
       id: item.id.videoId,
       title: item.snippet.title,
+      description: item.snippet.description || '',
       thumbnail: item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
       publishedAt: item.snippet.publishedAt,
       viewCount: details.viewCount,
