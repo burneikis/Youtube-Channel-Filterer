@@ -1,0 +1,76 @@
+.channel-info {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.channel-header {
+  display: flex;
+  padding: 24px;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.channel-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.channel-avatar-fallback {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.channel-initial {
+  color: white;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.channel-details {
+  flex: 1;
+  text-align: left;
+}
+
+.channel-name-section {
+  margin-bottom: 12px;
+}
+
+.channel-display-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #1a1a1a;
+  text-align: left;
+}
+
+.channel-username {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-weight: 400;
+  text-align: left;
+}
+
+.channel-description {
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+  font-size: 14px;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
