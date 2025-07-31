@@ -21,17 +21,19 @@ export const fetchChannelData = async (channelName) => {
   const channel = data.items[0];
   const channelId = channel.snippet.channelId;
   
-  // Fetch additional channel details to get the custom URL/username
+  // Fetch additional channel details to get the custom URL/username and subscriber count
   const channelResponse = await fetch(
-    `https://www.googleapis.com/youtube/v3/channels?part=snippet,brandingSettings&id=${channelId}&key=${apiKey}`
+    `https://www.googleapis.com/youtube/v3/channels?part=snippet,brandingSettings,statistics&id=${channelId}&key=${apiKey}`
   );
   
   let username = null;
+  let subscriberCount = null;
   if (channelResponse.ok) {
     const channelData = await channelResponse.json();
     if (channelData.items && channelData.items.length > 0) {
       const channelDetails = channelData.items[0];
       username = channelDetails.snippet.customUrl || channelDetails.snippet.title.toLowerCase().replace(/\s+/g, '');
+      subscriberCount = channelDetails.statistics?.subscriberCount;
     }
   }
   
@@ -40,7 +42,8 @@ export const fetchChannelData = async (channelName) => {
     username: username,
     description: channel.snippet.description,
     thumbnail: channel.snippet.thumbnails.high?.url || channel.snippet.thumbnails.default?.url,
-    channelId: channelId
+    channelId: channelId,
+    subscriberCount: subscriberCount
   };
 };
 

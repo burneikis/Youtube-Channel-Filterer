@@ -62,6 +62,14 @@
   text-align: left;
 }
 
+.channel-subscriber-count {
+  font-size: 14px;
+  color: #666;
+  margin: 2px 0 0 0;
+  font-weight: 400;
+  text-align: left;
+}
+
 .channel-description {
   color: #666;
   line-height: 1.5;
