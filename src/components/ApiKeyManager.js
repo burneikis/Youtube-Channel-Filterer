@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { saveApiKey, getApiKey, removeApiKey } from '../utils/apiKey';
+import FakeDataToggle from './FakeDataToggle';
 import './ApiKeyManager.css';
 
 const ApiKeyManager = ({ onClose }) => {
@@ -93,6 +94,11 @@ const ApiKeyManager = ({ onClose }) => {
         </div>
       )}
       
+        <div className="fake-data-section">
+          <h4>Development Mode</h4>
+          <FakeDataToggle />
+        </div>
+        
         <p className="api-key-help">
           Get your YouTube API key from the{' '}
           <a 

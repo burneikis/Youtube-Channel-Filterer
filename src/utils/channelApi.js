@@ -1,4 +1,21 @@
+import FAKE_CHANNELS from '../data/fakeChannels.json';
+import FAKE_VIDEOS from '../data/fakeVideos.json';
+
 export const fetchChannelData = async (channelName) => {
+  const useFakeData = localStorage.getItem('use_fake_data') === 'true';
+  
+  if (useFakeData) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const fakeChannel = FAKE_CHANNELS[channelName];
+    if (!fakeChannel) {
+      throw new Error('Channel not found');
+    }
+    
+    return fakeChannel;
+  }
+
   const apiKey = localStorage.getItem('youtube_api_key');
   if (!apiKey) {
     throw new Error('YouTube API key not found. Please set your API key.');
@@ -62,7 +79,21 @@ const isVideoShort = (duration) => {
   return totalSeconds <= 60;
 };
 
+export const getAvailableFakeChannels = () => {
+  return Object.keys(FAKE_CHANNELS);
+};
+
 export const fetchChannelVideos = async (channelId) => {
+  const useFakeData = localStorage.getItem('use_fake_data') === 'true';
+  
+  if (useFakeData) {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    const fakeVideos = FAKE_VIDEOS[channelId] || [];
+    return fakeVideos;
+  }
+
   const apiKey = localStorage.getItem('youtube_api_key');
   if (!apiKey) {
     throw new Error('YouTube API key not found. Please set your API key.');

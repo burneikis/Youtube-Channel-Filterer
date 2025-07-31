@@ -48,9 +48,53 @@
   background-color: #1a1a1a;
 }
 
+.fake-channels-hint {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.fake-channels-hint p {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.fake-channels-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.fake-channel-button {
+  background: #2a2a2a;
+  color: white;
+  border: 1px solid #404040;
+  border-radius: 15px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fake-channel-button:hover {
+  background: #e94560;
+  border-color: #e94560;
+  transform: translateY(-1px);
+}
+
 @media (max-width: 768px) {
   .search-bar {
     font-size: 1rem;
     padding: 14px 18px 14px 50px;
+  }
+  
+  .fake-channels-list {
+    gap: 8px;
+  }
+  
+  .fake-channel-button {
+    font-size: 0.8rem;
+    padding: 6px 12px;
   }
 }

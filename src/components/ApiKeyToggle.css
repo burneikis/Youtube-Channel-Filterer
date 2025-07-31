@@ -21,7 +21,6 @@
 .api-key-toggle:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
 }
 
 .api-key-toggle:active {

@@ -1,0 +1,74 @@
+{
+  "UCX6OQ3DkcsbYNE6H8uQQuVA": [
+    {
+      "id": "fake-video-1",
+      "title": "$1 vs $100,000 Vacation!",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-1/mqdefault.jpg",
+      "publishedAt": "2024-01-15T10:00:00Z",
+      "viewCount": "45000000",
+      "likeCount": "2100000",
+      "commentCount": "85000",
+      "duration": "PT15M30S",
+      "isShort": false
+    },
+    {
+      "id": "fake-video-2",
+      "title": "I Built 100 Wells In Africa",
+      "thumbnail": "https://i.ytimg.com/vi/fake-video-2/mqdefault.jpg",
+      "publishedAt": "2024-01-10T14:30:00Z",
+      "viewCount": "52000000",
+      "likeCount": "2800000",
+      "commentCount": "120000",
+      "duration": "PT12M45S",
+      "isShort": false
+    },
+    {
+      "id": "fake-short-1",
+      "title": "Crazy Food Challenge!",
+      "thumbnail": "https://i.ytimg.com/vi/fake-short-1/mqdefault.jpg",
+      "publishedAt": "2024-01-12T16:00:00Z",
+      "viewCount": "15000000",
+      "likeCount": "850000",
+      "commentCount": "35000",
+      "duration": "PT45S",
+      "isShort": true
+    }
+  ],
+  "UC-lHJZR3Gqxm24_Vd_AJ5Yw": [
+    {
+      "id": "fake-pewdie-1",
+      "title": "Reacting to Cringe TikToks",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-1/mqdefault.jpg",
+      "publishedAt": "2024-01-14T12:00:00Z",
+      "viewCount": "8500000",
+      "likeCount": "650000",
+      "commentCount": "45000",
+      "duration": "PT18M22S",
+      "isShort": false
+    },
+    {
+      "id": "fake-pewdie-2",
+      "title": "Gaming Setup Tour 2024",
+      "thumbnail": "https://i.ytimg.com/vi/fake-pewdie-2/mqdefault.jpg",
+      "publishedAt": "2024-01-08T09:15:00Z",
+      "viewCount": "12000000",
+      "likeCount": "920000",
+      "commentCount": "78000",
+      "duration": "PT25M10S",
+      "isShort": false
+    }
+  ],
+  "UCRijo3ddMTht_IHyNSNXpNQ": [
+    {
+      "id": "fake-dp-1",
+      "title": "Impossible Basketball Trick Shots",
+      "thumbnail": "https://i.ytimg.com/vi/fake-dp-1/mqdefault.jpg",
+      "publishedAt": "2024-01-13T15:45:00Z",
+      "viewCount": "25000000",
+      "likeCount": "1200000",
+      "commentCount": "95000",
+      "duration": "PT10M55S",
+      "isShort": false
+    }
+  ]
+}

@@ -1,8 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.css';
+import { getAvailableFakeChannels } from '../utils/channelApi';
 
 const SearchBar = ({ placeholder = "Choose a channel", onSearch }) => {
   const [channelName, setChannelName] = useState('');
+  const [useFakeData, setUseFakeData] = useState(false);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUseFakeData(localStorage.getItem('use_fake_data') === 'true');
+    };
+
+    const handleFakeDataToggle = () => {
+      setUseFakeData(localStorage.getItem('use_fake_data') === 'true');
+    };
+
+    handleStorageChange();
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('fakeDataToggle', handleFakeDataToggle);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('fakeDataToggle', handleFakeDataToggle);
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -10,6 +31,15 @@ const SearchBar = ({ placeholder = "Choose a channel", onSearch }) => {
       onSearch(channelName.trim());
     }
   };
+
+  const handleFakeChannelClick = (channel) => {
+    setChannelName(channel);
+    if (onSearch) {
+      onSearch(channel);
+    }
+  };
+
+  const fakeChannels = getAvailableFakeChannels();
 
   return (
     <div className="search-container">
@@ -27,6 +57,23 @@ const SearchBar = ({ placeholder = "Choose a channel", onSearch }) => {
           />
         </div>
       </form>
+      
+      {useFakeData && (
+        <div className="fake-channels-hint">
+          <p>Available test channels:</p>
+          <div className="fake-channels-list">
+            {fakeChannels.map(channel => (
+              <button 
+                key={channel}
+                className="fake-channel-button"
+                onClick={() => handleFakeChannelClick(channel)}
+              >
+                {channel}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
