@@ -1,0 +1,26 @@
+{
+  "MrBeast": {
+    "displayName": "MrBeast",
+    "username": "mrbeast",
+    "description": "I make expensive videos",
+    "thumbnail": "https://yt3.ggpht.com/ytc/AKedOLQxGSn5_6VvdGVV6E8wl-cVOZCl4hk3qzr5vQeKcQ=s800-c-k-c0x00ffffff-no-rj",
+    "channelId": "UCX6OQ3DkcsbYNE6H8uQQuVA",
+    "subscriberCount": "174000000"
+  },
+  "PewDiePie": {
+    "displayName": "PewDiePie",
+    "username": "pewdiepie",
+    "description": "Gaming and comedy videos",
+    "thumbnail": "https://yt3.ggpht.com/ytc/AKedOLR0LCp4RLCz3BGVy0mP4WQ3i2LZvGI4Z8LHLpP2=s800-c-k-c0x00ffffff-no-rj",
+    "channelId": "UC-lHJZR3Gqxm24_Vd_AJ5Yw",
+    "subscriberCount": "111000000"
+  },
+  "Dude Perfect": {
+    "displayName": "Dude Perfect",
+    "username": "dudeperfect",
+    "description": "We're 5 best friends and we kick butt",
+    "thumbnail": "https://yt3.ggpht.com/ytc/AKedOLRKVGsZUqyiGwk6zOGt8yEKp0_m_wZ_r-0_R7mZ=s800-c-k-c0x00ffffff-no-rj",
+    "channelId": "UCRijo3ddMTht_IHyNSNXpNQ",
+    "subscriberCount": "59000000"
+  }
+}

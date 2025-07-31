@@ -37,7 +37,7 @@
 }
 
 .api-key-manager h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 10px 0;
   color: #333;
   font-size: 18px;
 }
@@ -136,4 +136,19 @@
 
 .api-key-help a:hover {
   text-decoration: underline;
+}
+
+.fake-data-section {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+}
+
+.fake-data-section h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 14px;
+  font-weight: 600;
 }
