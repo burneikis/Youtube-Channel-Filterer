@@ -4,7 +4,6 @@ import ApiKeyManager from './components/ApiKeyManager';
 import ApiKeyToggle from './components/ApiKeyToggle';
 import SearchBar from './components/SearchBar';
 import ChannelPage from './components/ChannelPage';
-import ThemeToggle from './components/ThemeToggle';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
@@ -30,7 +29,6 @@ function App() {
     <ThemeProvider>
       <div className={`App ${currentView === 'search' ? 'no-scroll' : ''}`}>
         <ApiKeyToggle onClick={toggleApiKeyManager} />
-        <ThemeToggle />
         
         {currentView === 'search' ? (
           <div className="home-container">
