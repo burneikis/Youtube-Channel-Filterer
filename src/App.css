@@ -1,38 +1,72 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #e94560 100%);
+  background-attachment: fixed;
+}
+
+.home-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.app-title {
   color: white;
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Roboto', 'YouTube Sans', Arial, sans-serif;
+  letter-spacing: -1px;
 }
 
-.App-link {
-  color: #61dafb;
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.search-bar {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  border: 2px solid #303030;
+  border-radius: 30px;
+  background-color: #121212;
+  color: white;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.search-bar::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+.search-bar:focus {
+  border-color: #e94560;
+  box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.2), 0 6px 16px rgba(0, 0, 0, 0.4);
+  background-color: #1e1e1e;
+}
+
+.search-bar:hover {
+  border-color: #404040;
+  background-color: #1a1a1a;
+}
+
+@media (max-width: 768px) {
+  .app-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .search-bar {
+    font-size: 1rem;
+    padding: 14px 18px;
   }
 }
