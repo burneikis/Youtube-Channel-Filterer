@@ -47,6 +47,21 @@ export const fetchChannelData = async (channelName) => {
   };
 };
 
+const isVideoShort = (duration) => {
+  // Parse ISO 8601 duration format (PT1M30S = 1 minute 30 seconds)
+  if (!duration) return false;
+  
+  const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  if (!match) return false;
+  
+  const hours = parseInt(match[1] || 0);
+  const minutes = parseInt(match[2] || 0);
+  const seconds = parseInt(match[3] || 0);
+  
+  const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+  return totalSeconds <= 60;
+};
+
 export const fetchChannelVideos = async (channelId) => {
   const apiKey = localStorage.getItem('youtube_api_key');
   if (!apiKey) {
@@ -67,28 +82,45 @@ export const fetchChannelVideos = async (channelId) => {
     return [];
   }
 
-  // Get video IDs to fetch statistics
+  // Get video IDs to fetch statistics and content details (including duration)
   const videoIds = data.items.map(item => item.id.videoId).join(',');
   
-  const statsResponse = await fetch(
-    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${apiKey}`
+  const videoDetailsResponse = await fetch(
+    `https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails&id=${videoIds}&key=${apiKey}`
   );
   
-  let videoStats = {};
-  if (statsResponse.ok) {
-    const statsData = await statsResponse.json();
-    if (statsData.items) {
-      statsData.items.forEach(item => {
-        videoStats[item.id] = item.statistics;
+  let videoDetails = {};
+  if (videoDetailsResponse.ok) {
+    const detailsData = await videoDetailsResponse.json();
+    if (detailsData.items) {
+      detailsData.items.forEach(item => {
+        const stats = item.statistics || {};
+        const contentDetails = item.contentDetails || {};
+        const duration = contentDetails.duration || '';
+        
+        videoDetails[item.id] = {
+          viewCount: stats.viewCount || '0',
+          likeCount: stats.likeCount || '0',
+          commentCount: stats.commentCount || '0',
+          duration: duration,
+          isShort: isVideoShort(duration)
+        };
       });
     }
   }
 
-  return data.items.map(item => ({
-    id: item.id.videoId,
-    title: item.snippet.title,
-    thumbnail: item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
-    publishedAt: item.snippet.publishedAt,
-    viewCount: videoStats[item.id.videoId]?.viewCount || '0'
-  }));
+  return data.items.map(item => {
+    const details = videoDetails[item.id.videoId] || {};
+    return {
+      id: item.id.videoId,
+      title: item.snippet.title,
+      thumbnail: item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
+      publishedAt: item.snippet.publishedAt,
+      viewCount: details.viewCount,
+      likeCount: details.likeCount,
+      commentCount: details.commentCount,
+      duration: details.duration,
+      isShort: details.isShort
+    };
+  });
 };

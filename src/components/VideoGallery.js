@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './VideoGallery.css';
 import { fetchChannelVideos } from '../utils/channelApi';
 import SortControls from './SortControls';
+import FilterModal from './FilterModal';
 
 const VideoGallery = ({ channelId }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [activeFilters, setActiveFilters] = useState({});
 
   useEffect(() => {
     const loadVideos = async () => {
@@ -69,7 +72,28 @@ const VideoGallery = ({ channelId }) => {
     }
   };
 
-  const sortedVideos = sortVideos(videos, sortBy);
+  const handleApplyFilters = (filters) => {
+    setActiveFilters(filters);
+  };
+
+  const applyFilters = (videosToFilter) => {
+    let filteredVideos = [...videosToFilter];
+
+    if (activeFilters.searchTerm) {
+      filteredVideos = filteredVideos.filter(video =>
+        video.title.toLowerCase().includes(activeFilters.searchTerm.toLowerCase())
+      );
+    }
+
+    if (activeFilters.showShorts === false) {
+      filteredVideos = filteredVideos.filter(video => !video.isShort);
+    }
+
+    return filteredVideos;
+  };
+
+  const filteredVideos = applyFilters(videos);
+  const sortedVideos = sortVideos(filteredVideos, sortBy);
 
   if (loading) {
     return (
@@ -104,7 +128,18 @@ const VideoGallery = ({ channelId }) => {
     <div className="video-gallery">
       <div className="video-gallery-header">
         <h2>Videos</h2>
-        <SortControls sortBy={sortBy} onSortChange={setSortBy} />
+        <div className="video-controls">
+          <button 
+            className="filter-button"
+            onClick={() => setIsFilterModalOpen(true)}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"></polygon>
+            </svg>
+            Filters
+          </button>
+          <SortControls sortBy={sortBy} onSortChange={setSortBy} />
+        </div>
       </div>
       <div className="video-grid">
         {sortedVideos.map((video) => (
@@ -128,6 +163,12 @@ const VideoGallery = ({ channelId }) => {
           </div>
         ))}
       </div>
+      
+      <FilterModal 
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        onApplyFilters={handleApplyFilters}
+      />
     </div>
   );
 };
