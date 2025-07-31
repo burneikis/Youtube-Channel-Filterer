@@ -1,10 +1,15 @@
 .App {
   text-align: center;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom, #5c1a1a 0%, #1f0a0a 100%);
   background-attachment: fixed;
-  overflow: hidden;
+  overflow-x: hidden;
   position: relative;
+}
+
+.App.no-scroll {
+  height: 100vh;
+  overflow: hidden;
 }
 
 .home-container {

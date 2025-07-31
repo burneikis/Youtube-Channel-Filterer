@@ -43,3 +43,49 @@ export const fetchChannelData = async (channelName) => {
     channelId: channelId
   };
 };
+
+export const fetchChannelVideos = async (channelId) => {
+  const apiKey = localStorage.getItem('youtube_api_key');
+  if (!apiKey) {
+    throw new Error('YouTube API key not found. Please set your API key.');
+  }
+
+  const response = await fetch(
+    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=50&key=${apiKey}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`API request failed: ${response.status}`);
+  }
+
+  const data = await response.json();
+  
+  if (!data.items || data.items.length === 0) {
+    return [];
+  }
+
+  // Get video IDs to fetch statistics
+  const videoIds = data.items.map(item => item.id.videoId).join(',');
+  
+  const statsResponse = await fetch(
+    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${apiKey}`
+  );
+  
+  let videoStats = {};
+  if (statsResponse.ok) {
+    const statsData = await statsResponse.json();
+    if (statsData.items) {
+      statsData.items.forEach(item => {
+        videoStats[item.id] = item.statistics;
+      });
+    }
+  }
+
+  return data.items.map(item => ({
+    id: item.id.videoId,
+    title: item.snippet.title,
+    thumbnail: item.snippet.thumbnails.medium?.url || item.snippet.thumbnails.default?.url,
+    publishedAt: item.snippet.publishedAt,
+    viewCount: videoStats[item.id.videoId]?.viewCount || '0'
+  }));
+};

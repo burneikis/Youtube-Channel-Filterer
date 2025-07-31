@@ -25,7 +25,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className={`App ${currentView === 'search' ? 'no-scroll' : ''}`}>
       <ApiKeyToggle onClick={toggleApiKeyManager} />
       
       {currentView === 'search' ? (
