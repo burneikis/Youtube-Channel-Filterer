@@ -20,15 +20,15 @@ function FakeDataToggle() {
 
   return (
     <div className="fake-api-toggle">
-      <label className="toggle-label">
+      <label className="fake-api-toggle-label">
         <input
           type="checkbox"
           checked={useFakeData}
           onChange={handleToggle}
-          className="toggle-checkbox"
+          className="fake-api-toggle-checkbox"
         />
-        <span className="toggle-slider"></span>
-        <span className="toggle-text">Fake API</span>
+        <span className="fake-api-toggle-slider"></span>
+        <span className="fake-api-toggle-text">Fake API</span>
       </label>
     </div>
   );
