@@ -4,6 +4,8 @@ import ApiKeyManager from './components/ApiKeyManager';
 import ApiKeyToggle from './components/ApiKeyToggle';
 import SearchBar from './components/SearchBar';
 import ChannelPage from './components/ChannelPage';
+import ThemeToggle from './components/ThemeToggle';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
   const [showApiKeyManager, setShowApiKeyManager] = useState(false);
@@ -25,26 +27,29 @@ function App() {
   };
 
   return (
-    <div className={`App ${currentView === 'search' ? 'no-scroll' : ''}`}>
-      <ApiKeyToggle onClick={toggleApiKeyManager} />
-      
-      {currentView === 'search' ? (
-        <div className="home-container">
-          <div className="content-center">
-            <h1 className="app-title">Youtube Channel Filterer</h1>
-            
-            <SearchBar onSearch={handleChannelSearch} />
+    <ThemeProvider>
+      <div className={`App ${currentView === 'search' ? 'no-scroll' : ''}`}>
+        <ApiKeyToggle onClick={toggleApiKeyManager} />
+        <ThemeToggle />
+        
+        {currentView === 'search' ? (
+          <div className="home-container">
+            <div className="content-center">
+              <h1 className="app-title">Youtube Channel Filterer</h1>
+              
+              <SearchBar onSearch={handleChannelSearch} />
+            </div>
           </div>
-        </div>
-      ) : (
-        <ChannelPage 
-          channelName={selectedChannel} 
-          onBack={handleBackToSearch}
-        />
-      )}
-      
-      {showApiKeyManager && <ApiKeyManager onClose={toggleApiKeyManager} />}
-    </div>
+        ) : (
+          <ChannelPage 
+            channelName={selectedChannel} 
+            onBack={handleBackToSearch}
+          />
+        )}
+        
+        {showApiKeyManager && <ApiKeyManager onClose={toggleApiKeyManager} />}
+      </div>
+    </ThemeProvider>
   );
 }
 

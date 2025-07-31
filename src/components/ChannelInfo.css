@@ -1,5 +1,5 @@
 .channel-info {
-  background: white;
+  background: var(--bg-primary);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -50,13 +50,13 @@
   font-size: 24px;
   font-weight: 600;
   margin: 0 0 4px 0;
-  color: #1a1a1a;
+  color: var(--text-primary);
   text-align: left;
 }
 
 .channel-username {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   margin: 0;
   font-weight: 400;
   text-align: left;
@@ -64,14 +64,14 @@
 
 .channel-subscriber-count {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   margin: 2px 0 0 0;
   font-weight: 400;
   text-align: left;
 }
 
 .channel-description {
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
   font-size: 14px;
