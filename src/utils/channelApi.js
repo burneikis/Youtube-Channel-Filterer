@@ -76,7 +76,7 @@ const isVideoShort = (duration) => {
   const seconds = parseInt(match[3] || 0);
   
   const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-  return totalSeconds <= 60;
+  return totalSeconds <= 64;
 };
 
 export const getAvailableFakeChannels = () => {
