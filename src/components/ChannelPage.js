@@ -18,6 +18,10 @@ const ChannelPage = ({ channelName, onBack }) => {
   const [error, setError] = useState(null);
   const [videoCount, setVideoCount] = useState(null);
 
+  const handleVideoCountChange = useCallback((count) => {
+    setVideoCount(count);
+  }, []);
+
   const fetchChannelData = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -66,7 +70,7 @@ const ChannelPage = ({ channelName, onBack }) => {
         <ChannelInfo channelData={channelData} videoCount={videoCount} />
       </div>
       
-      {channelData && <VideoGallery channelId={channelData.channelId} onVideoCountChange={setVideoCount} />}
+      {channelData && <VideoGallery channelId={channelData.channelId} onVideoCountChange={handleVideoCountChange} />}
     </div>
   );
 };

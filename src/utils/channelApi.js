@@ -91,13 +91,17 @@ const fetchWithRetry = async (url, maxRetries = 3) => {
         return await response.json();
       }
       if (response.status === 429) {
-        // Rate limited, wait and retry
+        console.warn(`⏳ Rate limited (429), waiting ${1000 * (i + 1)}ms before retry ${i + 1}/${maxRetries}`);
         await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
         continue;
       }
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     } catch (error) {
-      if (i === maxRetries - 1) throw error;
+      if (i === maxRetries - 1) {
+        console.error(`❌ Final retry failed:`, error);
+        throw error;
+      }
+      console.warn(`⚠️ Retry ${i + 1}/${maxRetries} failed, waiting 1s:`, error.message);
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
@@ -115,47 +119,64 @@ const getChannelInfo = async (channelId, apiKey) => {
 };
 
 export const fetchChannelVideos = async (channelId) => {
+  console.log('Starting video fetch for channel:', channelId);
   const useFakeData = localStorage.getItem('use_fake_data') === 'true';
   
   if (useFakeData) {
+    console.log('Using fake data mode');
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 800));
     
     const fakeVideos = FAKE_VIDEOS[channelId] || [];
+    console.log('Returning fake videos:', fakeVideos.length);
     return fakeVideos;
   }
 
   const apiKey = localStorage.getItem('youtube_api_key');
   if (!apiKey) {
+    console.error('❌ No YouTube API key found');
     throw new Error('YouTube API key not found. Please set your API key.');
   }
+  console.log('🔑 API key found:', apiKey.length);
 
   // Get channel info to find the uploads playlist
+  console.log('Fetching channel info...');
   const channelInfo = await getChannelInfo(channelId, apiKey);
   if (!channelInfo) {
+    console.error('❌ Could not find channel information');
     throw new Error('Could not find channel information');
   }
 
   const uploadsPlaylistId = channelInfo.contentDetails.relatedPlaylists.uploads;
   if (!uploadsPlaylistId) {
+    console.error('❌ Could not find uploads playlist');
     throw new Error('Could not find uploads playlist');
   }
 
   let allVideos = [];
   let nextPageToken = null;
+  let pageCount = 0;
+
+  console.log('Starting pagination loop...');
 
   do {
+    pageCount++;
     let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}`;
     if (nextPageToken) {
       url += `&pageToken=${nextPageToken}`;
     }
 
+    // console.log(`Fetching page ${pageCount}${nextPageToken ? ` (token: ${nextPageToken.substring(0, 10)}...)` : ' (first page)'}`);
+
     try {
       const data = await fetchWithRetry(url);
       
       if (!data.items || data.items.length === 0) {
+        console.log('No more videos found, ending pagination');
         break;
       }
+
+      console.log(`Page ${pageCount}: Found ${data.items.length} videos`);
 
       // Convert playlist items to search format for compatibility
       const items = data.items.map(item => ({
@@ -165,17 +186,27 @@ export const fetchChannelVideos = async (channelId) => {
 
       allVideos.push(...items);
       nextPageToken = data.nextPageToken;
+
+      // console.log(`Total videos so far: ${allVideos.length}`);
+      // if (nextPageToken) {
+      //   console.log(`Next page token available: ${nextPageToken.substring(0, 10)}...`);
+      // } else {
+      //   console.log('No more pages available');
+      // }
       
       // Small delay to be respectful to the API
       await new Promise(resolve => setTimeout(resolve, 100));
 
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      console.error(`❌ Error fetching page ${pageCount}:`, error);
       break;
     }
   } while (nextPageToken);
+  
+  console.log(`✅ Pagination complete. Total videos fetched: ${allVideos.length} across ${pageCount} pages`);
 
   if (allVideos.length === 0) {
+    console.log('⚠️ No videos found, returning empty array');
     return [];
   }
 
@@ -187,6 +218,10 @@ export const fetchChannelVideos = async (channelId) => {
   // Fetch video details in batches
   for (let i = 0; i < videoIds.length; i += batchSize) {
     const batchIds = videoIds.slice(i, i + batchSize);
+    const batchNumber = Math.floor(i / batchSize) + 1;
+    const totalBatches = Math.ceil(videoIds.length / batchSize);
+    
+    console.log(`Fetching statistics batch ${batchNumber}/${totalBatches} (${batchIds.length} videos)`);
     
     try {
       const videoDetailsResponse = await fetchWithRetry(
@@ -194,6 +229,7 @@ export const fetchChannelVideos = async (channelId) => {
       );
       
       if (videoDetailsResponse.items) {
+        // console.log(`Batch ${batchNumber}: Received statistics for ${videoDetailsResponse.items.length} videos`);
         videoDetailsResponse.items.forEach(item => {
           const stats = item.statistics || {};
           const contentDetails = item.contentDetails || {};
@@ -207,17 +243,21 @@ export const fetchChannelVideos = async (channelId) => {
             isShort: isVideoShort(duration)
           };
         });
+      } else {
+        console.warn(`⚠️ Batch ${batchNumber}: No items in response`);
       }
 
       // Small delay between batches
       await new Promise(resolve => setTimeout(resolve, 100));
 
     } catch (error) {
-      console.error('Error fetching video statistics:', error);
+      console.error(`❌ Error fetching statistics batch ${batchNumber}:`, error);
     }
   }
+  
+  console.log(`✅ Statistics fetching complete. Got details for ${Object.keys(videoDetails).length} videos`);
 
-  return allVideos.map(item => {
+  const finalVideos = allVideos.map(item => {
     const details = videoDetails[item.id.videoId] || {};
     return {
       id: item.id.videoId,
@@ -232,4 +272,11 @@ export const fetchChannelVideos = async (channelId) => {
       isShort: details.isShort
     };
   });
+  
+  const shortsCount = finalVideos.filter(v => v.isShort).length;
+  const regularCount = finalVideos.length - shortsCount;
+  
+  console.log(`Video fetch complete! Total: ${finalVideos.length} videos (${regularCount} regular, ${shortsCount} shorts)`);
+  
+  return finalVideos;
 };

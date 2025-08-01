@@ -33,7 +33,7 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
     };
 
     loadVideos();
-  }, [channelId]);
+  }, [channelId, onVideoCountChange]);
 
   const formatViews = (viewCount) => {
     if (!viewCount) return '0 views';
