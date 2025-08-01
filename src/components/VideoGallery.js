@@ -4,7 +4,7 @@ import { fetchChannelVideos } from '../utils/channelApi';
 import SortControls from './SortControls';
 import FilterModal from './FilterModal';
 
-const VideoGallery = ({ channelId }) => {
+const VideoGallery = ({ channelId, onVideoCountChange }) => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,6 +22,9 @@ const VideoGallery = ({ channelId }) => {
       try {
         const videoData = await fetchChannelVideos(channelId);
         setVideos(videoData);
+        if (onVideoCountChange) {
+          onVideoCountChange(videoData.length);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -106,6 +109,25 @@ const VideoGallery = ({ channelId }) => {
   const filteredVideos = applyFilters(videos);
   const sortedVideos = sortVideos(filteredVideos, sortBy);
 
+  const calculateAverageViews = (videoList) => {
+    if (videoList.length === 0) return 0;
+    const totalViews = videoList.reduce((sum, video) => {
+      return sum + parseInt(video.viewCount || 0);
+    }, 0);
+    return Math.round(totalViews / videoList.length);
+  };
+
+  const formatAverageViews = (avgViews) => {
+    if (avgViews >= 1000000) {
+      return `${(avgViews / 1000000).toFixed(1)}M avg views`;
+    } else if (avgViews >= 1000) {
+      return `${(avgViews / 1000).toFixed(1)}K avg views`;
+    }
+    return `${avgViews} avg views`;
+  };
+
+  const averageViews = calculateAverageViews(sortedVideos);
+
   if (loading) {
     return (
       <div className="video-gallery">
@@ -138,7 +160,15 @@ const VideoGallery = ({ channelId }) => {
   return (
     <div className="video-gallery">
       <div className="video-gallery-header">
-        <h2>Videos</h2>
+        <div className="video-gallery-title-section">
+          <h2>Videos</h2>
+          <div className="video-stats">
+            <span className="video-count">{sortedVideos.length} videos shown</span>
+            {sortedVideos.length > 0 && (
+              <span className="average-views">{formatAverageViews(averageViews)}</span>
+            )}
+          </div>
+        </div>
         <div className="video-controls">
           <button 
             className="filter-button"

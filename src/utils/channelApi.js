@@ -83,6 +83,37 @@ export const getAvailableFakeChannels = () => {
   return Object.keys(FAKE_CHANNELS);
 };
 
+const fetchWithRetry = async (url, maxRetries = 3) => {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) {
+        return await response.json();
+      }
+      if (response.status === 429) {
+        // Rate limited, wait and retry
+        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+        continue;
+      }
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    } catch (error) {
+      if (i === maxRetries - 1) throw error;
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+};
+
+const getChannelInfo = async (channelId, apiKey) => {
+  const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&id=${channelId}&key=${apiKey}`;
+  try {
+    const data = await fetchWithRetry(url);
+    return data.items && data.items.length > 0 ? data.items[0] : null;
+  } catch (error) {
+    console.error('Error getting channel info:', error);
+    return null;
+  }
+};
+
 export const fetchChannelVideos = async (channelId) => {
   const useFakeData = localStorage.getItem('use_fake_data') === 'true';
   
@@ -99,48 +130,94 @@ export const fetchChannelVideos = async (channelId) => {
     throw new Error('YouTube API key not found. Please set your API key.');
   }
 
-  const response = await fetch(
-    `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&order=date&maxResults=50&key=${apiKey}`
-  );
-
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
+  // Get channel info to find the uploads playlist
+  const channelInfo = await getChannelInfo(channelId, apiKey);
+  if (!channelInfo) {
+    throw new Error('Could not find channel information');
   }
 
-  const data = await response.json();
-  
-  if (!data.items || data.items.length === 0) {
+  const uploadsPlaylistId = channelInfo.contentDetails.relatedPlaylists.uploads;
+  if (!uploadsPlaylistId) {
+    throw new Error('Could not find uploads playlist');
+  }
+
+  let allVideos = [];
+  let nextPageToken = null;
+
+  do {
+    let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=50&key=${apiKey}`;
+    if (nextPageToken) {
+      url += `&pageToken=${nextPageToken}`;
+    }
+
+    try {
+      const data = await fetchWithRetry(url);
+      
+      if (!data.items || data.items.length === 0) {
+        break;
+      }
+
+      // Convert playlist items to search format for compatibility
+      const items = data.items.map(item => ({
+        id: { videoId: item.snippet.resourceId.videoId },
+        snippet: item.snippet
+      }));
+
+      allVideos.push(...items);
+      nextPageToken = data.nextPageToken;
+      
+      // Small delay to be respectful to the API
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+      break;
+    }
+  } while (nextPageToken);
+
+  if (allVideos.length === 0) {
     return [];
   }
 
   // Get video IDs to fetch statistics and content details (including duration)
-  const videoIds = data.items.map(item => item.id.videoId).join(',');
-  
-  const videoDetailsResponse = await fetch(
-    `https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails&id=${videoIds}&key=${apiKey}`
-  );
-  
+  const videoIds = allVideos.map(item => item.id.videoId);
+  const batchSize = 50;
   let videoDetails = {};
-  if (videoDetailsResponse.ok) {
-    const detailsData = await videoDetailsResponse.json();
-    if (detailsData.items) {
-      detailsData.items.forEach(item => {
-        const stats = item.statistics || {};
-        const contentDetails = item.contentDetails || {};
-        const duration = contentDetails.duration || '';
-        
-        videoDetails[item.id] = {
-          viewCount: stats.viewCount || '0',
-          likeCount: stats.likeCount || '0',
-          commentCount: stats.commentCount || '0',
-          duration: duration,
-          isShort: isVideoShort(duration)
-        };
-      });
+
+  // Fetch video details in batches
+  for (let i = 0; i < videoIds.length; i += batchSize) {
+    const batchIds = videoIds.slice(i, i + batchSize);
+    
+    try {
+      const videoDetailsResponse = await fetchWithRetry(
+        `https://www.googleapis.com/youtube/v3/videos?part=statistics,contentDetails&id=${batchIds.join(',')}&key=${apiKey}`
+      );
+      
+      if (videoDetailsResponse.items) {
+        videoDetailsResponse.items.forEach(item => {
+          const stats = item.statistics || {};
+          const contentDetails = item.contentDetails || {};
+          const duration = contentDetails.duration || '';
+          
+          videoDetails[item.id] = {
+            viewCount: stats.viewCount || '0',
+            likeCount: stats.likeCount || '0',
+            commentCount: stats.commentCount || '0',
+            duration: duration,
+            isShort: isVideoShort(duration)
+          };
+        });
+      }
+
+      // Small delay between batches
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+    } catch (error) {
+      console.error('Error fetching video statistics:', error);
     }
   }
 
-  return data.items.map(item => {
+  return allVideos.map(item => {
     const details = videoDetails[item.id.videoId] || {};
     return {
       id: item.id.videoId,

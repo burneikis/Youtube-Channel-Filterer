@@ -62,10 +62,17 @@
   text-align: left;
 }
 
-.channel-subscriber-count {
+.channel-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.channel-subscriber-count,
+.channel-video-count {
   font-size: 14px;
   color: var(--text-secondary);
-  margin: 2px 0 0 0;
+  margin: 0;
   font-weight: 400;
   text-align: left;
 }

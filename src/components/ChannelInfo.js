@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ChannelInfo.css';
 
-const ChannelInfo = ({ channelData }) => {
+const ChannelInfo = ({ channelData, videoCount }) => {
   const [imageError, setImageError] = useState(false);
 
   if (!channelData) return null;
@@ -15,6 +15,16 @@ const ChannelInfo = ({ channelData }) => {
       return `${(num / 1000).toFixed(1)}K subscribers`;
     }
     return `${num} subscribers`;
+  };
+
+  const formatVideoCount = (count) => {
+    if (count === null || count === undefined) return '';
+    if (count >= 1000000) {
+      return `${(count / 1000000).toFixed(1)}M videos`;
+    } else if (count >= 1000) {
+      return `${(count / 1000).toFixed(1)}K videos`;
+    }
+    return `${count} videos`;
   };
 
   return (
@@ -41,9 +51,14 @@ const ChannelInfo = ({ channelData }) => {
             {channelData.username && (
               <p className="channel-username">{channelData.username}</p>
             )}
-            {channelData.subscriberCount && (
-              <p className="channel-subscriber-count">{formatSubscriberCount(channelData.subscriberCount)}</p>
-            )}
+            <div className="channel-stats">
+              {channelData.subscriberCount && (
+                <p className="channel-subscriber-count">{formatSubscriberCount(channelData.subscriberCount)}</p>
+              )}
+              {videoCount !== null && videoCount !== undefined && (
+                <p className="channel-video-count">{formatVideoCount(videoCount)}</p>
+              )}
+            </div>
           </div>
           {channelData.description && (
             <p className="channel-description">{channelData.description}</p>

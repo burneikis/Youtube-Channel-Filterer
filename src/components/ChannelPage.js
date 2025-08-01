@@ -16,6 +16,7 @@ const ChannelPage = ({ channelName, onBack }) => {
   const [channelData, setChannelData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [videoCount, setVideoCount] = useState(null);
 
   const fetchChannelData = useCallback(async () => {
     setLoading(true);
@@ -62,10 +63,10 @@ const ChannelPage = ({ channelName, onBack }) => {
       <div className="channel-page">
         <BackButton onClick={onBack} />
 
-        <ChannelInfo channelData={channelData} />
+        <ChannelInfo channelData={channelData} videoCount={videoCount} />
       </div>
       
-      {channelData && <VideoGallery channelId={channelData.channelId} />}
+      {channelData && <VideoGallery channelId={channelData.channelId} onVideoCountChange={setVideoCount} />}
     </div>
   );
 };
