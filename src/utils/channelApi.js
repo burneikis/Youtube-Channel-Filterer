@@ -119,7 +119,6 @@ const getChannelInfo = async (channelId, apiKey) => {
 };
 
 export const fetchChannelVideos = async (channelId) => {
-  console.log('Starting video fetch for channel:', channelId);
   const useFakeData = localStorage.getItem('use_fake_data') === 'true';
   
   if (useFakeData) {
@@ -137,7 +136,6 @@ export const fetchChannelVideos = async (channelId) => {
     console.error('❌ No YouTube API key found');
     throw new Error('YouTube API key not found. Please set your API key.');
   }
-  console.log('🔑 API key found:', apiKey.length);
 
   // Get channel info to find the uploads playlist
   console.log('Fetching channel info...');
@@ -166,8 +164,6 @@ export const fetchChannelVideos = async (channelId) => {
       url += `&pageToken=${nextPageToken}`;
     }
 
-    // console.log(`Fetching page ${pageCount}${nextPageToken ? ` (token: ${nextPageToken.substring(0, 10)}...)` : ' (first page)'}`);
-
     try {
       const data = await fetchWithRetry(url);
       
@@ -176,7 +172,7 @@ export const fetchChannelVideos = async (channelId) => {
         break;
       }
 
-      console.log(`Page ${pageCount}: Found ${data.items.length} videos`);
+      console.log(`Page ${pageCount}: Found ${allVideos.length + data.items.length} videos`);
 
       // Convert playlist items to search format for compatibility
       const items = data.items.map(item => ({
@@ -187,12 +183,7 @@ export const fetchChannelVideos = async (channelId) => {
       allVideos.push(...items);
       nextPageToken = data.nextPageToken;
 
-      // console.log(`Total videos so far: ${allVideos.length}`);
-      // if (nextPageToken) {
-      //   console.log(`Next page token available: ${nextPageToken.substring(0, 10)}...`);
-      // } else {
-      //   console.log('No more pages available');
-      // }
+      console.log(`Page ${pageCount}: Found ${allVideos.length} videos`);
       
       // Small delay to be respectful to the API
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -202,8 +193,6 @@ export const fetchChannelVideos = async (channelId) => {
       break;
     }
   } while (nextPageToken);
-  
-  console.log(`✅ Pagination complete. Total videos fetched: ${allVideos.length} across ${pageCount} pages`);
 
   if (allVideos.length === 0) {
     console.log('⚠️ No videos found, returning empty array');
@@ -229,7 +218,6 @@ export const fetchChannelVideos = async (channelId) => {
       );
       
       if (videoDetailsResponse.items) {
-        // console.log(`Batch ${batchNumber}: Received statistics for ${videoDetailsResponse.items.length} videos`);
         videoDetailsResponse.items.forEach(item => {
           const stats = item.statistics || {};
           const contentDetails = item.contentDetails || {};
@@ -254,8 +242,6 @@ export const fetchChannelVideos = async (channelId) => {
       console.error(`❌ Error fetching statistics batch ${batchNumber}:`, error);
     }
   }
-  
-  console.log(`✅ Statistics fetching complete. Got details for ${Object.keys(videoDetails).length} videos`);
 
   const finalVideos = allVideos.map(item => {
     const details = videoDetails[item.id.videoId] || {};
