@@ -13,6 +13,8 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
   const [activeFilters, setActiveFilters] = useState({ showShorts: false });
 
   useEffect(() => {
+    let cancelled = false;
+    
     const loadVideos = async () => {
       if (!channelId) return;
       
@@ -21,18 +23,28 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
       
       try {
         const videoData = await fetchChannelVideos(channelId);
-        setVideos(videoData);
-        if (onVideoCountChange) {
-          onVideoCountChange(videoData.length);
+        if (!cancelled) {
+          setVideos(videoData);
+          if (onVideoCountChange) {
+            onVideoCountChange(videoData.length);
+          }
         }
       } catch (err) {
-        setError(err.message);
+        if (!cancelled) {
+          setError(err.message);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
     loadVideos();
+    
+    return () => {
+      cancelled = true;
+    };
   }, [channelId, onVideoCountChange]);
 
   const formatViews = (viewCount) => {

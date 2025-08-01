@@ -172,8 +172,6 @@ export const fetchChannelVideos = async (channelId) => {
         break;
       }
 
-      console.log(`Page ${pageCount}: Found ${allVideos.length + data.items.length} videos`);
-
       // Convert playlist items to search format for compatibility
       const items = data.items.map(item => ({
         id: { videoId: item.snippet.resourceId.videoId },
