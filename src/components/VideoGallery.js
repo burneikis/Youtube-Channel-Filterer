@@ -3,6 +3,7 @@ import './VideoGallery.css';
 import { fetchChannelVideos } from '../utils/channelApi';
 import SortControls from './SortControls';
 import FilterModal from './FilterModal';
+import VideoModal from './VideoModal';
 
 const VideoGallery = ({ channelId, onVideoCountChange }) => {
   const [videos, setVideos] = useState([]);
@@ -11,6 +12,8 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
   const [sortBy, setSortBy] = useState('mostViews');
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [activeFilters, setActiveFilters] = useState({ showShorts: false });
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -89,6 +92,16 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
 
   const handleApplyFilters = (filters) => {
     setActiveFilters(filters);
+  };
+
+  const handleVideoClick = (video) => {
+    setSelectedVideo(video);
+    setIsVideoModalOpen(true);
+  };
+
+  const handleCloseVideoModal = () => {
+    setIsVideoModalOpen(false);
+    setSelectedVideo(null);
   };
 
   const applyFilters = (videosToFilter) => {
@@ -196,7 +209,7 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
       </div>
       <div className="video-grid">
         {sortedVideos.map((video) => (
-          <div key={video.id} className="video-card">
+          <div key={video.id} className="video-card" onClick={() => handleVideoClick(video)}>
             <div className="video-thumbnail">
               <img
                 src={video.thumbnail}
@@ -221,6 +234,12 @@ const VideoGallery = ({ channelId, onVideoCountChange }) => {
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
         onApplyFilters={handleApplyFilters}
+      />
+      
+      <VideoModal 
+        video={selectedVideo}
+        isOpen={isVideoModalOpen}
+        onClose={handleCloseVideoModal}
       />
     </div>
   );
