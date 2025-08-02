@@ -4,6 +4,21 @@ import './VideoModal.css';
 const VideoModal = ({ video, isOpen, onClose }) => {
   if (!isOpen || !video) return null;
 
+  const getHighResThumbnail = (thumbnailUrl) => {
+    if (!thumbnailUrl) return thumbnailUrl;
+
+
+    
+    if (thumbnailUrl.includes('mqdefault.jpg')) {
+      return thumbnailUrl.replace('mqdefault.jpg', 'maxresdefault.jpg');
+    }
+    if (thumbnailUrl.includes('default.jpg')) {
+      return thumbnailUrl.replace('default.jpg', 'hqdefault.jpg');
+    }
+    
+    return thumbnailUrl;
+  };
+
   const formatViews = (viewCount) => {
     if (!viewCount) return '0 views';
     const num = parseInt(viewCount);
@@ -51,10 +66,16 @@ const VideoModal = ({ video, isOpen, onClose }) => {
         
         <div className="video-modal-thumbnail">
           <img
-            src={video.thumbnail}
+            src={getHighResThumbnail(video.thumbnail)}
             alt={video.title}
             onError={(e) => {
-              e.target.style.display = 'none';
+              // Fallback to original thumbnail if high-res fails
+              if (e.target.src !== video.thumbnail) {
+                e.target.src = video.thumbnail;
+                console.log('Error, using original thumbnail.');
+              } else {
+                e.target.style.display = 'none';
+              }
             }}
           />
         </div>
